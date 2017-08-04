@@ -1,4 +1,4 @@
-# encoding=utf-8
+# coding=utf-8
 
 from app import init_app
 from app import models

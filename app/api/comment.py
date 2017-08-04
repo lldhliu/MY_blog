@@ -1,3 +1,4 @@
+# coding=utf-8
 from ..models import Bloglist
 from . import main
 from . import current_user
@@ -12,7 +13,7 @@ def bloglist_comment(blog_id):
     user = current_user()
     c = Comment(request.get_json())
     # 设置是谁评论的
-    print('c', c.comment_content)
+    # print('c', c.comment_content)
     c.poster = user.username
     c.blog_id = blog_id
     # timeArray = time.localtime(c.created_time)
@@ -20,16 +21,16 @@ def bloglist_comment(blog_id):
     # c.created_time = otherStyleTime
     # 保存到数据库
     c.save()
-    print(c.created_time)
+    # print(c.created_time)
     counts = Comment.query.filter_by(blog_id=blog_id).count()
-    print(counts)
+    # print(counts)
     r = dict(
         success=True,
         data=c.json(),
         counts=counts
     )
-    print('r', r)
-    print('json', jsonify(r))
+    # print('r', r)
+    # print('json', jsonify(r))
     return jsonify(r)
 
 
@@ -44,7 +45,7 @@ def comment_delete(comment_id):
         abort(401)
     else:
         c.delete()
-        print('c', c)
+        # print('c', c)
         # return redirect(url_for('bloglist_view', username=user.username))
         counts = Comment.query.filter_by(blog_id=c.blog_id).count()
         print(counts)
