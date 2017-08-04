@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from ..models import Bloglist
 from . import main
 from . import current_user
@@ -18,7 +20,7 @@ def bloglist_delete(bloglist_id):
         abort(401)
     else:
         t.delete()
-        print('t', t)
+        # print('t', t)
         # return redirect(url_for('bloglist_view', username=user.username))
         r = {
             'success': True,
@@ -31,24 +33,24 @@ def bloglist_delete(bloglist_id):
 def tweet_add():
     print('hahha')
     u = current_user()
-    print(u.username)
-    print(u)
+    # print(u.username)
+    # print(u)
     form = request.get_json()
-    print(form)
+    # print(form)
     t = Bloglist(form)
     t.user = u
     # timeArray = time.localtime(t.created_time)
     # otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
     # t.created_time = otherStyleTime
     t.save()
-    print(t.created_time)
+    # print(t.created_time)
     r = dict(
         success=True,
         data=t.json(),
     )
-    print(url_for('controllers.bloglist_view', username=u.username))
+    # print(url_for('controllers.bloglist_view', username=u.username))
     r['next'] = request.args.get('next', url_for('controllers.blog_detail', username=u.username, blog_id=t.id))
-    print('r', r)
+    # print('r', r)
     return jsonify(r)
 
 
@@ -57,14 +59,14 @@ def update(blog_id):
     u = current_user()
     b = Bloglist.query.filter_by(id=blog_id).first_or_404()
     form = request.get_json()
-    print(form)
+    # print(form)
     b.update(form)
-    print(b)
+    # print(b)
     r = dict(
         success=True,
         data=b.json(),
     )
     r['next'] = request.args.get('next', url_for('controllers.bloglist_view', username=u.username))
-    print('r', r)
+    # print('r', r)
     return jsonify(r)
 
